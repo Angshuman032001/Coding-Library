@@ -1,36 +1,55 @@
-//Credits : invictus_123, kactl, bqi343
-
-//Zero - indexing
+int a[N];
+//1-based indexing
 template <class T> struct SegTree {
-    const T ID = 0; //default value
-    int n; vector <T> seg;
-    T comb(T a, T b) { return (a + b); } //any associative function
-    SegTree(int _n) { n = _n; seg.assign(4 * n, ID); }
-    void _update(int i, int st, int en, int idx, T val) {
-        if(st == en) {
-            seg[i] = val;
+    int n; vector <T> tree;
+    const T unit = 0; //default value
+
+    T merge(T a, T b) { return (a + b); } //any associative function
+
+    SegTree(int _n) { n = _n; tree.assign(4 * n, unit); }
+
+    void _update(int i, int l, int r, int idx, T val) {
+        if(l == r) {
+            tree[i] = val;
             return;
         }
-        int mid = (st + en) / 2;
-        if(mid < idx) _update(2 * i + 1, mid + 1, en, idx, val);
-        else _update(2 * i, st, mid, idx, val);
-        seg[i] = comb(seg[2 * i], seg[2 * i + 1]);
+        int mid = (l + r) / 2;
+        if(mid < idx) _update(2 * i + 1, mid + 1, r, idx, val);
+        else _update(2 * i, l, mid, idx, val);
+        tree[i] = merge(tree[2 * i], tree[2 * i + 1]);
     }
-    T _query(int i, int st, int en, int l, int r) {
-        if(en < l || r < st) return ID;
-        if(l <= st && en <= r) return seg[i];
-        int mid = (st + en) / 2;
-        return comb(_query(2 * i, st, mid, l, r), _query(2 * i + 1, mid + 1, en, l, r));
+
+    void build(int i, int l, int r){
+        if(l == r){
+            tree[i] = a[l];
+            return;
+        }
+        int mid = (l + r)/2;
+        build(2*i, l, mid);
+        build(2*i+1,mid + 1, r);
+        tree[i] = merge(tree[2*i],tree[2*i+1]);
     }
-    T query(int l, int r) { return _query(1, 0, n - 1, l, r); }
-    void update(int idx, T val) { _update(1, 0, n - 1, idx, val); }
-    int _kthOne(int i, int st, int en, int k){
-        if(st == en) return st;
-        int mid = (st + en)/2;
-        if(seg[2*i] >= k) return _kthOne(2*i, st, mid, k);
-        else return _kthOne(2*i+1,mid+1,en,k-seg[2*i]);
+
+    T _query(int i, int l, int r, int rx, int ry) {
+        if(r < rx || ry < l) return unit;
+        if(rx <= l && r <= ry) return tree[i];
+        int mid = (l + r) / 2;
+        return merge(_query(2 * i, l, mid, rx, ry), _query(2 * i + 1, mid + 1, r, rx, ry));
     }
+
+    T query(int l, int r) { return _query(1, 1, n, l, r); }
+
+    void update(int idx, T val) { _update(1, 1, n, idx, val); }
+
+    int _kthOne(int i, int l, int r, int k){
+        if(l == r) return l;
+        int mid = (l + r)/2;
+        if(tree[2*i] >= k) return _kthOne(2*i, l, mid, k);
+        else return _kthOne(2*i+1,mid+1,r,k-tree[2*i]);
+    }
+    
     int kthOne(int k){
         return _kthOne(1,0,n-1,k);
     }
 };
+
