@@ -5,7 +5,6 @@ const int base_digits = 9;
 struct bigint {
     vector<int> a;
     int sign;
-    /*<arpa>*/
     int size(){
     if(a.empty())return 0;
     int ans=(a.size()-1)*base_digits;
@@ -36,7 +35,6 @@ struct bigint {
     for(auto c : s)  ans += c - '0';
     return ans;
     }
-    /*</arpa>*/
     bigint() :
     sign(1) {
     }

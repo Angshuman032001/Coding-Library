@@ -1,4 +1,3 @@
-//Credits : kactl 
 template<class T> struct SegTree {
     static constexpr T unit = 0;
     T f(T a, T b) { return (a+b); } // (any associative fn)

@@ -1,7 +1,7 @@
 int n; 
-vi adj[N];
-vec(bool) visited;
-vi tin, low;
+std::vector<int> v; adj[N];
+std::vector<bool> visited;
+std::vector<int> v; tin, low;
 
 int timer = 0,cnt = 0;
 

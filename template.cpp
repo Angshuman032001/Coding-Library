@@ -1,5 +1,5 @@
-#pragma GCC optimize ("O3")
-#pragma GCC target ("sse4")
+/*#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")*/
 
 #include<bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -39,6 +39,7 @@ using namespace std;
 #define mk(arr,n,type)      type *arr=new type[n];
 #define w(x)                int x; cin>>x; while(x--)
 #define all(v)              v.begin(),v.end()
+#define rev(v)              reverse(v.begin(), v.end())
 #define G(a,b)              get<a>(b)
 #define rep(i,begin,end)    for (__typeof(end) i = (begin) - ((begin) > (end)); i != (end) - ((begin) > (end)); i += 1 - 2 * ((begin) > (end)))
 #define len(s)              s.length()
@@ -50,6 +51,10 @@ template<typename T, typename ...Args> void DBG(T first, Args... args)
 
 mt19937                     rng(chrono::steady_clock::now().time_since_epoch().count());
 
+int getRand(int l, int r){
+    uniform_int_distribution<int> uid(l, r);
+    return uid(rng);
+}
 
 template<typename T>
 using ordered_set = tree<T , null_type ,less<T> ,rb_tree_tag ,tree_order_statistics_node_update>;
@@ -158,8 +163,8 @@ inline int mul(int x,int y){
 
 void solve(){
 
-
-
+    
+    
 }
 
  
@@ -170,8 +175,8 @@ int32_t main()
     int t;
 
     t = 1;
+    
     cin>>t;
-
     while(t--){
         solve();
     }
