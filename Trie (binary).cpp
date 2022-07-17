@@ -100,6 +100,9 @@ public:
         ans += root->cnt;
         return ans;
     }
-
-
 };
+
+//https://codeforces.com/contest/706/problem/D
+//https://codeforces.com/contest/706/submission/164587404
+
+
